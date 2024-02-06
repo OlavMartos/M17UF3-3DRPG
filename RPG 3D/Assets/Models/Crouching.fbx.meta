@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b017e6ee6caa104b8fa7b66508dd20c
+guid: cbc552b1ebe7c8d46b0f225790b6757e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Jump
+      name: Crouching
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 57
+      lastFrame: 122
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
