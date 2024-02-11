@@ -1,5 +1,5 @@
 {
-    "name": "Player",
+    "name": "PlayerControls",
     "maps": [
         {
             "name": "Game",
@@ -36,6 +36,15 @@
                     "name": "Crouch",
                     "type": "Button",
                     "id": "9c4ea200-9934-4b04-9393-02c8d27a3dfe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "0545d20c-71d1-4288-8fef-682f883f12ca",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -139,6 +148,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4bec2190-6b06-4261-bd1b-51681f54cddc",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
