@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Stadistics")]
     public float playerSpeed;
-    public float jumpHeight = 0.5f;
-    public float gravityValue = -9.81f;
+    public float jumpHeight;
+    public float gravityValue;
 
     private void Awake()
     {
@@ -42,6 +42,38 @@ public class PlayerController : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
+
+        StartValues();
+    }
+
+    void StartValues()
+    {
+        string color = "cyan";
+        string color2 = "cyan";
+        string color3 = "cyan";
+
+        Debug.Log("<color=cyan>Player Stats:</color>");
+        if (playerSpeed == 0)
+        {
+            playerSpeed = 3f;
+            color = "red";
+        }
+
+        if (jumpHeight == 0)
+        {
+            jumpHeight = 0.5f;
+            color2 = "red";
+        }
+
+        if (gravityValue == 0)
+        {
+            gravityValue = -9.81f;
+            color3 = "red";
+        }
+
+        Debug.Log($"\t<color={color}>playerSpeed esta a {playerSpeed}</color>");
+        Debug.Log($"\t<color={color2}>jumpHeigth puesta a {jumpHeight}</color>");
+        Debug.Log($"\t<color={color3}>gravityValue esta a {gravityValue}</color>");
     }
 
     private void Start()
@@ -104,6 +136,8 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
             velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
         }
+
+
     }
 
     public void Aiming()
