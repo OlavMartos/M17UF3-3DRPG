@@ -5,7 +5,14 @@ using UnityEngine.Animations;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager Instance;
+    // Singleton
+    private static InputManager _instance;
+    public static InputManager Instance
+    {
+        get { return _instance; }
+    }
+
+    // New Input System
     private PlayerControls playerControls;
 
     // Jump
@@ -18,8 +25,8 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) Destroy(gameObject);
-        else Instance = this;
+        if (_instance != null && _instance != this) Destroy(gameObject);
+        else _instance = this;
         playerControls = new PlayerControls();
     }
 
@@ -34,6 +41,10 @@ public class InputManager : MonoBehaviour
     {
         playerControls.Game.Jump.started -= _ => PlayerJump.Invoke();
         playerControls.Game.Aim.performed -= _ => PlayerAim.Invoke();
-        
+    }
+
+    public Vector2 GetPlayerMovement()
+    {
+        return playerControls.Game.Move.ReadValue<Vector2>();
     }
 }
