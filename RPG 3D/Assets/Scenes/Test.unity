@@ -1513,6 +1513,9 @@ MonoBehaviour:
   isJumping: 0
   isAiming: 0
   isFalling: 0
+  playerSpeed: 3
+  jumpHeight: 0.5
+  gravityValue: -9.81
 --- !u!143 &919132147801979275
 CharacterController:
   m_ObjectHideFlags: 0
