@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,16 +14,19 @@ public class PlayerController : MonoBehaviour
 
     // Private Variables
     private Animator _animator;
-    private CharacterController _controller;
+    private Rigidbody _rb;
     private Vector3 velocity;
 
     // Input variables
     private InputManager inputManager;
-    private Vector2 input;
+    private Vector2 movementInput;
+    private Vector2 mouseInput;
+    private Transform _playerCamera;
 
     [Header("Test Bools")] // Posteriormente sustituir por [HideInInspector]
     [SerializeField] private bool isDead;
     [SerializeField] private bool isVictory;
+    [Space]
     [SerializeField] private bool isGrounded;
     [SerializeField] private bool isLanded;
     [SerializeField] private bool isCrouching;
@@ -31,9 +36,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isWalking;
 
     [Header("Stadistics")]
-    public float playerSpeed;
-    public float jumpHeight;
-    public float gravityValue;
+    [SerializeField] private float playerSpeed;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _sensitive;
+    [SerializeField] private float gravityValue;
 
     private void Awake()
     {
@@ -41,7 +47,9 @@ public class PlayerController : MonoBehaviour
         else _instance = this;
 
         _animator = GetComponent<Animator>();
-        _controller = GetComponent<CharacterController>();
+        _rb = GetComponent<Rigidbody>();
+        _playerCamera = Camera.main.transform;
+
 
         StartValues();
     }
@@ -55,24 +63,24 @@ public class PlayerController : MonoBehaviour
         Debug.Log("<color=cyan>Player Stats:</color>");
         if (playerSpeed == 0)
         {
-            playerSpeed = 3f;
+            playerSpeed = 30f;
             color = "red";
         }
 
-        if (jumpHeight == 0)
+        if (_jumpForce == 0)
         {
-            jumpHeight = 0.5f;
+            _jumpForce = 1.5f;
             color2 = "red";
         }
 
         if (gravityValue == 0)
         {
-            gravityValue = -9.81f;
+            gravityValue = 9.81f;
             color3 = "red";
         }
 
         Debug.Log($"\t<color={color}>playerSpeed esta a {playerSpeed}</color>");
-        Debug.Log($"\t<color={color2}>jumpHeigth puesta a {jumpHeight}</color>");
+        Debug.Log($"\t<color={color2}>jumpForce puesta a {_jumpForce}</color>");
         Debug.Log($"\t<color={color3}>gravityValue esta a {gravityValue}</color>");
     }
 
@@ -95,9 +103,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        input = inputManager.GetPlayerMovement();
+        movementInput = inputManager.GetPlayerMovement();
         CheckIfIsMoving();
-        isGrounded = _controller.isGrounded;
+        isGrounded = IsGrounded();
         
         if (isDead && !isVictory) StartCoroutine(BadEnd());
         if (isVictory && !isDead) StartCoroutine(GoodEnd());
@@ -105,11 +113,17 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
+    private bool IsGrounded()
+    {
+        return GetComponent<Rigidbody>().velocity.y == 0;
+    }
+
     private void CheckIfIsMoving()
     {
-        if (!(input.x != 0 || input.y != 0)) StartCoroutine(WaitForBoolToChange());
+        if (!(movementInput.x != 0 || movementInput.y != 0)) StartCoroutine(WaitForBoolToChange());
         else isWalking = true;
     }
+
     private IEnumerator WaitForBoolToChange()
     {
         StopCoroutine(WaitForBoolToChange());
@@ -119,25 +133,26 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        if(isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0)
         {
             velocity.y = 0f;
-            isJumping = false;
             isFalling = false;
         }
 
-        if(_controller.velocity.y < 0f && !isGrounded) isFalling = true;
+        if (movementInput.x != 0.0f || movementInput.y != 0.0f)
+        {
+            Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
+            _rb.MovePosition(transform.position + direction * playerSpeed * Time.deltaTime);
+        }
     }
 
     public void Jump()
     {
-        if (isGrounded && _controller.enabled == true && !isLanded && !isCrouching)
+        if(isGrounded && !isLanded && !isCrouching)
         {
             isJumping = true;
-            velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
+            _rb.velocity = Vector3.up * _jumpForce * gravityValue;
         }
-
-
     }
 
     public void Aiming()
