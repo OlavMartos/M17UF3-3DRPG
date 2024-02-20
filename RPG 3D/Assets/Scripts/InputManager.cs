@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class InputManager : MonoBehaviour
 {
@@ -41,10 +38,16 @@ public class InputManager : MonoBehaviour
     {
         playerControls.Game.Jump.started -= _ => PlayerJump.Invoke();
         playerControls.Game.Aim.performed -= _ => PlayerAim.Invoke();
+        playerControls.Disable();
     }
 
     public Vector2 GetPlayerMovement()
     {
         return playerControls.Game.Move.ReadValue<Vector2>();
+    }
+
+    public float GetPlayerIsRunning()
+    {
+        return playerControls.Game.Run.ReadValue<float>();
     }
 }

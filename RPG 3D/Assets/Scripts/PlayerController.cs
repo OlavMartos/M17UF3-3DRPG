@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -15,7 +13,8 @@ public class PlayerController : MonoBehaviour
     // Private Variables
     private Animator _animator;
     private Rigidbody _rb;
-    private Vector3 velocity;
+    private Vector3 _velocity;
+    [SerializeField] private float _magnitude;
 
     // Input variables
     private InputManager inputManager;
@@ -28,12 +27,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isVictory;
     [Space]
     [SerializeField] private bool isGrounded;
-    [SerializeField] private bool isLanded;
     [SerializeField] private bool isCrouching;
     [SerializeField] private bool isJumping;
     [SerializeField] private bool isAiming;
     [SerializeField] private bool isFalling;
     [SerializeField] private bool isWalking;
+    [SerializeField] private bool isRunning;
 
     [Header("Stadistics")]
     [SerializeField] private float playerSpeed;
@@ -106,11 +105,16 @@ public class PlayerController : MonoBehaviour
         movementInput = inputManager.GetPlayerMovement();
         CheckIfIsMoving();
         isGrounded = IsGrounded();
-        
+        if(isGrounded) { isJumping = false; }
+
+        _magnitude = inputManager.GetPlayerIsRunning() + 1f;
+        isRunning = isWalking && _magnitude > 1.0f;
+
         if (isDead && !isVictory) StartCoroutine(BadEnd());
         if (isVictory && !isDead) StartCoroutine(GoodEnd());
 
         Move();
+        Run();
     }
 
     private bool IsGrounded()
@@ -133,9 +137,9 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        if (isGrounded && velocity.y < 0)
+        if (isGrounded && _velocity.y < 0)
         {
-            velocity.y = 0f;
+            _velocity.y = 0f;
             isFalling = false;
         }
 
@@ -148,10 +152,24 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if(isGrounded && !isLanded && !isCrouching)
+        if(isGrounded && !isCrouching)
         {
             isJumping = true;
             _rb.velocity = Vector3.up * _jumpForce * gravityValue;
+        }
+    }
+
+    public void Run()
+    {
+        if(isRunning)
+        {
+            playerSpeed = 200f;
+            _jumpForce = 3f;
+        }
+        else
+        {
+            playerSpeed = 30f;
+            _jumpForce = 1.5f;
         }
     }
 
