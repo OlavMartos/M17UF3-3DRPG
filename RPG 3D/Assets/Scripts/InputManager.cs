@@ -20,6 +20,10 @@ public class InputManager : MonoBehaviour
     public delegate void OnPlayerAim();
     public static event OnPlayerAim PlayerAim;
 
+    // Crouch
+    public delegate void OnPlayerCrouch();
+    public static event OnPlayerCrouch PlayerCrouch;
+
     private void Awake()
     {
         if (_instance != null && _instance != this) Destroy(gameObject);
@@ -31,6 +35,7 @@ public class InputManager : MonoBehaviour
     {
         playerControls.Game.Jump.started += _ => PlayerJump.Invoke();
         playerControls.Game.Aim.performed += _ => PlayerAim.Invoke();
+        playerControls.Game.Crouch.performed += _ => PlayerCrouch.Invoke();
         playerControls.Enable();
     }
 
@@ -38,6 +43,7 @@ public class InputManager : MonoBehaviour
     {
         playerControls.Game.Jump.started -= _ => PlayerJump.Invoke();
         playerControls.Game.Aim.performed -= _ => PlayerAim.Invoke();
+        playerControls.Game.Crouch.performed -= _ => PlayerCrouch.Invoke();
         playerControls.Disable();
     }
 
