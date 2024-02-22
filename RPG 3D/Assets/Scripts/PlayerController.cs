@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rb;
     private Vector3 _velocity;
-    [SerializeField] private float _magnitude;
+    [HideInInspector] private float _magnitude;
 
     // Input variables
     private InputManager inputManager;
@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _sensitive;
     [SerializeField] private float gravityValue;
+
+    [Header("a")] [SerializeField] private bool PlayerControlsStatus;
 
     private void Awake()
     {
@@ -90,6 +92,7 @@ public class PlayerController : MonoBehaviour
         DetectJump();
         DetectFalling();
         DetectRunning();
+        PlayerControlsStatus = inputManager.GetCurrentControlsStatus();
 
         // Death and Win Detect
         if (isDead && !isVictory) StartCoroutine(BadEnd());
@@ -242,6 +245,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator BadEnd()
     {
         _animator.Play("Die");
+        inputManager.DisableControls();
         yield return new WaitForSeconds(2.5f);
     }
 
@@ -252,6 +256,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator GoodEnd()
     {
         _animator.Play("Dance");
+        inputManager.DisableControls();
         yield return new WaitForSeconds(2.5f);
     }
 }

@@ -56,4 +56,14 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Game.Run.ReadValue<float>();
     }
+
+    public void DisableControls()
+    {
+        playerControls.Game.Disable();
+    }
+
+    public bool GetCurrentControlsStatus()
+    {
+        return playerControls.Game.enabled;
+    }
 }
