@@ -22,13 +22,13 @@ public class PlayerController : MonoBehaviour
     private InputManager inputManager;
     private Vector2 movementInput;
     private Vector2 mouseInput;
-    private Transform _playerCamera;
+    public Transform _playerCamera;
 
     [Header("Test Bools")]
-    [SerializeField] private bool isDead;
-    [SerializeField] private bool isVictory;
+    public bool isDead;
+    public bool isVictory;
     [Space]
-    [HideInInspector] private bool isGrounded;
+    [SerializeField] private bool isGrounded;
     [HideInInspector] private bool isCrouching;
     [HideInInspector] private bool isJumping;
     [HideInInspector] private bool isAiming;
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
     private void DetectJump()
     {
         isGrounded = IsGrounded();
-        if (isGrounded) isJumping = false;
+        if (isGrounded) { isJumping = false; isFalling = false; }
     }
 
     /// <summary>
@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviour
     /// <returns>If the player is falling to the ground returns true</returns>
     private bool IsFalling()
     {
+        _animator.SetBool("isFalling", true);
         return _rb.velocity.y < 0;
     }
 
