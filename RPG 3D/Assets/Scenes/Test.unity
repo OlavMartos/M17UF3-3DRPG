@@ -449,8 +449,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518076848}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.009384354, y: 0.9887053, z: -0.13204795, w: -0.070265085}
-  m_LocalPosition: {x: 10.627675, y: 2.862538, z: 34.886185}
+  m_LocalRotation: {x: -0.009384363, y: 0.9887053, z: -0.13204798, w: -0.07026514}
+  m_LocalPosition: {x: 10.627675, y: 2.6615381, z: 39.094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1310,8 +1310,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882842563}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.009384354, y: 0.9887053, z: -0.13204795, w: -0.070265085}
-  m_LocalPosition: {x: 10.627675, y: 2.862538, z: 34.886185}
+  m_LocalRotation: {x: -0.009384363, y: 0.9887053, z: -0.13204798, w: -0.07026514}
+  m_LocalPosition: {x: 10.627675, y: 2.6615381, z: 39.094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1715,7 +1715,7 @@ Transform:
   m_GameObject: {fileID: 919132147801979273}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 10.127675, y: 0.901, z: 31.386183}
+  m_LocalPosition: {x: 10.127675, y: 0.7, z: 35.594}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1781,7 +1781,7 @@ GameObject:
   - component: {fileID: 2003682522}
   - component: {fileID: 2003682525}
   - component: {fileID: 919132147801979274}
-  - component: {fileID: 919132147801979276}
+  - component: {fileID: 919132147801979275}
   m_Layer: 0
   m_Name: Zombie Idle
   m_TagString: Untagged
@@ -1804,12 +1804,15 @@ MonoBehaviour:
   _playerCamera: {fileID: 0}
   isDead: 0
   isVictory: 0
+  isGrounded: 0
+  isJumping: 0
+  isFalling: 0
   playerSpeed: 30
   _jumpForce: 1.5
   _sensitive: 0
   gravityValue: 4.905
   PlayerControlsStatus: 0
---- !u!54 &919132147801979276
+--- !u!54 &919132147801979275
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

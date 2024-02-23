@@ -30,9 +30,9 @@ public class PlayerController : MonoBehaviour
     [Space]
     [SerializeField] private bool isGrounded;
     [HideInInspector] private bool isCrouching;
-    [HideInInspector] private bool isJumping;
+    [HideInInspector] public bool isJumping = false;
     [HideInInspector] private bool isAiming;
-    [HideInInspector] private bool isFalling;
+    [SerializeField] public bool isFalling;
     [HideInInspector] private bool isWalking;
     [HideInInspector] private bool isRunning;
 
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         if (playerSpeed == 0)  playerSpeed = 30f;
         if (_jumpForce == 0)  _jumpForce = 1.5f;
         if (gravityValue == 0)  gravityValue = 9.81f;
+        isJumping = false;
     }
 
     private void Start()
@@ -97,6 +98,9 @@ public class PlayerController : MonoBehaviour
         // Death and Win Detect
         if (isDead && !isVictory) StartCoroutine(BadEnd());
         if (isVictory && !isDead) StartCoroutine(GoodEnd());
+        if (isGrounded) _animator.SetBool("isFalling", false);
+        if (isFalling) _animator.SetBool("isFalling", true); _animator.SetBool("startJump", false);
+        if (isJumping) _animator.SetBool("startJump", true);
         
         // Call to functions
         Move();
@@ -155,7 +159,6 @@ public class PlayerController : MonoBehaviour
     /// <returns>If the player is falling to the ground returns true</returns>
     private bool IsFalling()
     {
-        _animator.SetBool("isFalling", true);
         return _rb.velocity.y < 0;
     }
 
@@ -165,7 +168,7 @@ public class PlayerController : MonoBehaviour
     private void CheckIfIsMoving()
     {
         if (!(movementInput.x != 0 || movementInput.y != 0)) StartCoroutine(WaitForBoolToChange());
-        else isWalking = true;
+        else isWalking = true; 
     }
 
     private IEnumerator WaitForBoolToChange()
@@ -173,6 +176,7 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(WaitForBoolToChange());
         yield return new WaitForSeconds(0.1f);
         isWalking = false;
+        _animator.SetBool("isWalking", false) ;
     }
 
     /// <summary>
@@ -188,6 +192,7 @@ public class PlayerController : MonoBehaviour
 
         if (movementInput.x != 0.0f || movementInput.y != 0.0f)
         {
+            _animator.SetBool("isWalking", true);
             Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
             _rb.MovePosition(transform.position + direction * playerSpeed * Time.deltaTime);
         }
@@ -198,7 +203,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        if(isGrounded && !isCrouching && !isFalling)
+        if (isGrounded && !isCrouching && !isFalling)
         {
             isJumping = true;
             _rb.velocity = Vector3.up * _jumpForce * gravityValue;
@@ -212,11 +217,14 @@ public class PlayerController : MonoBehaviour
     {
         if(isRunning)
         {
+            _animator.SetBool("isRunning", true);
+            _animator.SetBool("isWalking", false);
             playerSpeed = 200f;
             _jumpForce = 3f;
         }
         else
         {
+            _animator.SetBool("isRunning", false);
             playerSpeed = 30f;
             _jumpForce = 1.5f;
         }
@@ -236,6 +244,8 @@ public class PlayerController : MonoBehaviour
     void Crouch()
     {
         isCrouching = !isCrouching;
+        if (isCrouching) _animator.SetLayerWeight(1, 1);
+        else _animator.SetLayerWeight(1, 0);
     }
 
 
