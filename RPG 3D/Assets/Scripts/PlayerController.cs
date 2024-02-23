@@ -236,8 +236,9 @@ public class PlayerController : MonoBehaviour
     public void Aiming()
     {
         isAiming = !isAiming;
+        // https://www.youtube.com/watch?v=Ri8PEbD4w8A&ab_channel=samyam
     }
-    
+
     /// <summary>
     /// Function to crouch
     /// </summary>
