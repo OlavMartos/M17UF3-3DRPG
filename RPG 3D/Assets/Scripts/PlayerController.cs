@@ -236,6 +236,8 @@ public class PlayerController : MonoBehaviour
     public void Aiming()
     {
         isAiming = !isAiming;
+        if(isAiming) SwapCamera.Instance.AimCamera();
+        else SwapCamera.Instance.NormalCamera();
         // https://www.youtube.com/watch?v=Ri8PEbD4w8A&ab_channel=samyam
     }
 
