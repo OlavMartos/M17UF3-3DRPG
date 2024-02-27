@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
     public delegate void OnPlayerCrouch();
     public static event OnPlayerCrouch PlayerCrouch;
 
+
     private void Awake()
     {
         if (_instance != null && _instance != this) Destroy(gameObject);
@@ -65,5 +66,10 @@ public class InputManager : MonoBehaviour
     public bool GetCurrentControlsStatus()
     {
         return playerControls.Game.enabled;
+    }
+
+    public float IsInteractive()
+    {
+        return playerControls.Game.Interact.ReadValue<float>();
     }
 }
