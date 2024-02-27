@@ -10,5 +10,21 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        if (DataManager.instance.SaveExist())
+        {
+            DataManager.instance.LoadGame();
+        }
+    }
+
+    public GameObject GetPlayer()
+    {
+        return GameObject.Find("Zombie Idle");
+    }
+
+    public PlayerController GetPlayerController()
+    {
+        return PlayerController.Instance;
     }
 }

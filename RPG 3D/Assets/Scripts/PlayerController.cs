@@ -3,6 +3,7 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[System.Serializable]
 public class PlayerController : MonoBehaviour
 {
     // Singleton
@@ -37,12 +38,13 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool isRunning;
 
     [Header("Stadistics")]
-    [SerializeField] private float playerSpeed;
+    [SerializeField] public float playerSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _sensitive;
     [SerializeField] private float gravityValue;
 
     [Header("a")] [SerializeField] private bool PlayerControlsStatus;
+    public Transform _transform { get; set; }
 
     private void Awake()
     {

@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerData : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float[] position;
+    public float[] rotation;
+    public float speed;
 
-    // Update is called once per frame
-    void Update()
+    public PlayerData(PlayerController controller)
     {
-        
+        position = new float[3];
+        position[0] = controller.transform.position.x;
+        position[1] = controller.transform.position.y;
+        position[2] = controller.transform.position.z;
+
+        rotation = new float[3];
+        rotation[0] = controller.transform.rotation.x;
+        rotation[1] = controller.transform.rotation.y;
+        rotation[2] = controller.transform.rotation.z;
+
+        speed = controller.playerSpeed;
     }
 }

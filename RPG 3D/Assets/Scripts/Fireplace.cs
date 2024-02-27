@@ -10,7 +10,7 @@ public class Fireplace : MonoBehaviour
         {
             if (InputManager.Instance.IsInteractive() > 0)
             {
-                
+                DataManager.instance.SaveGame();
             }
         }  
     }
