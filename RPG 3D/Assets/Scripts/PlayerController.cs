@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour
     public bool isVictory;
     [Space]
     [SerializeField] private bool isGrounded;
-    [HideInInspector] private bool isCrouching;
+    [HideInInspector] public bool isCrouching;
     [HideInInspector] public bool isJumping = false;
     [HideInInspector] private bool isAiming;
-    [SerializeField] public bool isFalling;
+    [HideInInspector] private bool isFalling;
     [HideInInspector] private bool isWalking;
     [HideInInspector] private bool isRunning;
 
@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded) _animator.SetBool("isFalling", false);
         if (isFalling) _animator.SetBool("isFalling", true); _animator.SetBool("startJump", false);
         if (isJumping) _animator.SetBool("startJump", true);
+        ChangeAnimatorLayer();
         
         // Call to functions
         Move();
@@ -240,7 +241,7 @@ public class PlayerController : MonoBehaviour
     public void Aiming()
     {
         isAiming = !isAiming;
-        if(isAiming) SwapCamera.Instance.AimCamera();
+        if (isAiming) SwapCamera.Instance.AimCamera();
         else SwapCamera.Instance.NormalCamera();
         // https://www.youtube.com/watch?v=Ri8PEbD4w8A&ab_channel=samyam
     }
@@ -251,6 +252,10 @@ public class PlayerController : MonoBehaviour
     void Crouch()
     {
         isCrouching = !isCrouching;
+    }
+
+    public void ChangeAnimatorLayer()
+    {
         if (isCrouching) _animator.SetLayerWeight(1, 1);
         else _animator.SetLayerWeight(1, 0);
     }
@@ -276,10 +281,5 @@ public class PlayerController : MonoBehaviour
         _animator.Play("Dance");
         inputManager.DisableControls();
         yield return new WaitForSeconds(2.5f);
-    }
-
-    public void LoadDataFromJSON(PlayerData data)
-    {
-        transform.position = data.position;
     }
 }

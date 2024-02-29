@@ -148,8 +148,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.010699235, y: 0.0030545818, z: 0.01068018}
-  m_Center: {x: -0.00012663123, y: -0.00004953984, z: -0.000031883363}
+  m_Size: {x: 0.010699235, y: 0.025692252, z: 0.010680179}
+  m_Center: {x: -0.00012663126, y: 0.011269302, z: -0.00003188312}
 --- !u!65 &23543395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e15138c666e4445841eb7249f16011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &375735607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,7 +1738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f296eb83696f342a07163623f71a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cont: {fileID: 0}
 --- !u!4 &1310803709
 Transform:
   m_ObjectHideFlags: 0
@@ -2858,8 +2858,8 @@ MonoBehaviour:
   isDead: 0
   isVictory: 0
   isGrounded: 0
+  isCrouching: 0
   isJumping: 0
-  isFalling: 0
   playerSpeed: 45
   _jumpForce: 1.5
   _sensitive: 0

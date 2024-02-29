@@ -7,6 +7,7 @@ public class PlayerData
     public Vector3 position;
     public float[] rotation;
     public float speed;
+    public bool isCrouching;
 
     public PlayerData(PlayerController controller)
     {
@@ -18,5 +19,13 @@ public class PlayerData
         rotation[2] = controller.transform.rotation.z;
 
         speed = controller.playerSpeed;
+        isCrouching = controller.isCrouching;
     }
+
+    ///
+    /// COSAS QUE SE AÑADIERON Y SE DECIDIERON QUITAR:
+    /// 1. NormalCameraPriority : Motivo en el punto 2
+    /// 2. AimCameraPriority : Al estar con la AimCamera siendo prioridad no se puede guardar partida
+    /// 3. IsJumping : No sirve de absolutamente nada por que igualmente se activara el isFalling
+    ///
 }

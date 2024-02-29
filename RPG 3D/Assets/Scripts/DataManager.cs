@@ -6,6 +6,8 @@ using UnityEngine;
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
+    public GameObject player;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -36,6 +38,13 @@ public class DataManager : MonoBehaviour
         string path = GetPersisentPath() + "/save.json";
         string playerData = File.ReadAllText(path);
         PlayerData data = JsonUtility.FromJson<PlayerData>(playerData);
+
+        player = GameManager.Instance.GetPlayer();
+
+        // Change the values from the player
+        player.transform.position = data.position;
+        PlayerController controller = player.GetComponent<PlayerController>();
+        controller.isCrouching = data.isCrouching;
 
     }
 

@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public PlayerController cont;
 
 
     private void Awake()
@@ -23,12 +23,6 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(CanvasManager.Instance.NewGameText());
         }
-    }
-
-    private void Update()
-    {
-
-        cont = GetPlayerController();
     }
 
     public GameObject GetPlayer()
