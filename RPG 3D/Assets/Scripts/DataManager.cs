@@ -15,7 +15,37 @@ public class DataManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+    }
 
+    public string GetPersisentPath()
+    {
+        return Path.Combine(Application.persistentDataPath, "Data");
+    }
+
+    public void SaveGame()
+    {
+        CreatePersistent();
+        PlayerData playerData = new PlayerData(GameManager.Instance.GetPlayerController());
+        string path = GetPersisentPath() + "/save.json";
+        File.WriteAllText(path, JsonUtility.ToJson(playerData));
+        StartCoroutine(CanvasManager.Instance.SavingGame());
+    }
+
+    public void LoadGame()
+    {
+        string path = GetPersisentPath() + "/save.json";
+        string playerData = File.ReadAllText(path);
+        PlayerData data = JsonUtility.FromJson<PlayerData>(playerData);
+
+    }
+
+    public bool SaveExist()
+    {
+        return File.Exists(GetPersisentPath() + "/save.json");
+    }
+
+    public void CreatePersistent()
+    {
         string sourcePath = Path.Combine(Application.streamingAssetsPath, "Data");
         string targetPath = GetPersisentPath();
 
@@ -40,33 +70,5 @@ public class DataManager : MonoBehaviour
 
             if (!File.Exists(targetFile)) { File.Copy(file, targetFile); }
         }
-    }
-
-    public string GetPersisentPath()
-    {
-        return Path.Combine(Application.persistentDataPath, "Data");
-    }
-
-    public void SaveGame()
-    {
-        PlayerData playerData = new PlayerData(GameManager.Instance.GetPlayerController());
-        string path = GetPersisentPath() + "/save.json";
-        System.IO.File.WriteAllText(path, JsonUtility.ToJson(playerData));
-        Debug.Log(playerData);
-    }
-
-    public void LoadGame()
-    {
-        //string path = GetPersisentPath() + "/save.json";
-        //string playerData = System.IO.File.ReadAllText(path);
-
-        //PlayerController controller = GameManager.Instance.GetPlayer().GetComponent<PlayerController>();
-        //controller = JsonUtility.FromJson<PlayerController>(playerData);
-    }
-
-    public bool SaveExist()
-    {
-        string path = GetPersisentPath() + "/save.json";
-        return File.Exists(path);
     }
 }

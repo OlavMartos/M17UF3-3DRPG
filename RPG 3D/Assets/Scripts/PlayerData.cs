@@ -1,20 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[System.Serializable]
-public class PlayerData : MonoBehaviour
+[Serializable]
+public class PlayerData
 {
-    public float[] position;
+    public Vector3 position;
     public float[] rotation;
     public float speed;
 
     public PlayerData(PlayerController controller)
     {
-        position = new float[3];
-        position[0] = controller.transform.position.x;
-        position[1] = controller.transform.position.y;
-        position[2] = controller.transform.position.z;
+        position = controller.transform.position;
 
         rotation = new float[3];
         rotation[0] = controller.transform.rotation.x;

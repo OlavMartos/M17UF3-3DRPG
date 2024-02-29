@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Stadistics")]
     [SerializeField] public float playerSpeed;
+    private float initialSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _sensitive;
     [SerializeField] private float gravityValue;
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         inputManager = InputManager.Instance;
+        initialSpeed = playerSpeed;
     }
 
     private void OnEnable()
@@ -227,7 +229,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             _animator.SetBool("isRunning", false);
-            playerSpeed = 30f;
+            playerSpeed = initialSpeed;
             _jumpForce = 1.5f;
         }
     }
@@ -274,5 +276,10 @@ public class PlayerController : MonoBehaviour
         _animator.Play("Dance");
         inputManager.DisableControls();
         yield return new WaitForSeconds(2.5f);
+    }
+
+    public void LoadDataFromJSON(PlayerData data)
+    {
+        transform.position = data.position;
     }
 }

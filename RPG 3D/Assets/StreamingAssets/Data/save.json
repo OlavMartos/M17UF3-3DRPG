@@ -1,15 +1,9 @@
-[
-  {
-    "PlayerTransform": [
-      {
-        "posX": 0.0
-      },
-      {
-        "posY": 0.0
-      },
-      {
-        "posZ": 0.0
-      }
-    ]
-  }
-]
+{
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "rotation": [ 0.0, 0.0, 0.0 ],
+  "speed": 0.0
+}

@@ -30,6 +30,7 @@ public class InputManager : MonoBehaviour
         if (_instance != null && _instance != this) Destroy(gameObject);
         else _instance = this;
         playerControls = new PlayerControls();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()

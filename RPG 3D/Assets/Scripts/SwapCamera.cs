@@ -13,6 +13,7 @@ public class SwapCamera : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(this);
+        DontDestroyOnLoad(gameObject);
     }
 
     public void AimCamera()
