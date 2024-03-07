@@ -8,6 +8,7 @@ public class PlayerData
     public float[] rotation;
     public float speed;
     public bool isCrouching;
+    public int brainCount;
 
     public PlayerData(PlayerController controller)
     {
@@ -20,6 +21,7 @@ public class PlayerData
 
         speed = controller.playerSpeed;
         isCrouching = controller.isCrouching;
+        brainCount = GameManager.Instance.BrainCount;
     }
 
     ///

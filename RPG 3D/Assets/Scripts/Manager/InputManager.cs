@@ -69,7 +69,7 @@ public class InputManager : MonoBehaviour
         return playerControls.Game.enabled;
     }
 
-    public float IsInteractive()
+    public float IsInteracting()
     {
         return playerControls.Game.Interact.ReadValue<float>();
     }

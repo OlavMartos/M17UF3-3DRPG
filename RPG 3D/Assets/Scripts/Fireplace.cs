@@ -8,7 +8,7 @@ public class Fireplace : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (InputManager.Instance.IsInteractive() > 0)
+            if (InputManager.Instance.IsInteracting() > 0)
             {
                 DataManager.instance.SaveGame();
             }

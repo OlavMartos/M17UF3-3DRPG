@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public int BrainCount;
+    [SerializeField] private List<GameObject> playerHUD = new List<GameObject>();
 
 
     private void Awake()
@@ -25,6 +27,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        GetHUD();
+        BrainCountHUD("0");
+    }
+
+    public void GetHUD()
+    {
+        GameObject hud = GameObject.Find("HUD");
+
+        GameObject[] ui = new GameObject[hud.transform.childCount];
+        for (int i = 0; i < ui.Length; i++) ui[i] = hud.transform.GetChild(i).gameObject;
+        for (int i = 0; i < hud.transform.childCount; i++)
+        {
+            playerHUD.Add(ui[i]);
+        }
+    }
+
+    public void BrainCountHUD(string count)
+    {
+        foreach (GameObject go in playerHUD)
+        {
+            if (go.GetComponentInChildren<TextMeshProUGUI>() != null)
+            {
+                go.GetComponentInChildren<TextMeshProUGUI>().text = count;
+            }
+        }
+    }
+    public void AddBrain()
+    {
+        BrainCount++;
+        BrainCountHUD(BrainCount.ToString());
+    }
+
     public GameObject GetPlayer()
     {
         return GameObject.Find("Zombie Idle");
@@ -34,4 +70,5 @@ public class GameManager : MonoBehaviour
     {
         return PlayerController.Instance;
     }
+
 }
