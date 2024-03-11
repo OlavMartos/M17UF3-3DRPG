@@ -730,9 +730,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0c8d98c7151d5418907c87d9545284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newGame: {fileID: 714544137}
-  saveLoaded: {fileID: 1081330760}
-  savingGame: {fileID: 435713114}
+  newGame: {fileID: 1100896084}
+  saveLoaded: {fileID: 2133818879}
+  savingGame: {fileID: 781332157}
   persistentCanvas: {fileID: 1051117033}
 --- !u!1 &435713114
 GameObject:
@@ -2346,6 +2346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BrainCount: 0
+  loadedBrainCount: 0
   playerHUD: []
 --- !u!4 &1310803709
 Transform:

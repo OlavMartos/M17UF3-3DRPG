@@ -45,6 +45,7 @@ public class DataManager : MonoBehaviour
         player.transform.position = data.position;
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.isCrouching = data.isCrouching;
+        GameManager.Instance.loadedBrainCount = data.brainCount;
 
     }
 

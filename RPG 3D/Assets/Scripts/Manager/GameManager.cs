@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public int BrainCount;
+    public int loadedBrainCount;
     [SerializeField] private List<GameObject> playerHUD = new List<GameObject>();
 
 
@@ -24,13 +25,15 @@ public class GameManager : MonoBehaviour
         else
         {
             StartCoroutine(CanvasManager.Instance.NewGameText());
+            loadedBrainCount = 0;
         }
     }
 
     private void Start()
     {
         GetHUD();
-        BrainCountHUD("0");
+        BrainCountHUD(loadedBrainCount.ToString());
+        BrainCount = loadedBrainCount;
     }
 
     public void GetHUD()
