@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class PlayerController : MonoBehaviour
@@ -198,6 +196,8 @@ public class PlayerController : MonoBehaviour
         if (movementInput.x != 0.0f || movementInput.y != 0.0f)
         {
             _animator.SetBool("isWalking", true);
+            _animator.SetFloat("posX", movementInput.x);
+            _animator.SetFloat("posY", movementInput.y);
             Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
             _rb.MovePosition(transform.position + direction * playerSpeed * Time.deltaTime);
         }
