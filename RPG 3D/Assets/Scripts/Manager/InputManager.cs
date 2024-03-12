@@ -24,6 +24,10 @@ public class InputManager : MonoBehaviour
     public delegate void OnPlayerCrouch();
     public static event OnPlayerCrouch PlayerCrouch;
 
+    // Shot
+    public delegate void OnPlayerShot();
+    public static event OnPlayerShot PlayerShot;
+
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Jump.started += _ => PlayerJump.Invoke();
         playerControls.Game.Aim.performed += _ => PlayerAim.Invoke();
         playerControls.Game.Crouch.performed += _ => PlayerCrouch.Invoke();
+        playerControls.Game.Shot.performed += _ => PlayerShot.Invoke();
         playerControls.Enable();
     }
 
@@ -46,6 +51,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Jump.started -= _ => PlayerJump.Invoke();
         playerControls.Game.Aim.performed -= _ => PlayerAim.Invoke();
         playerControls.Game.Crouch.performed -= _ => PlayerCrouch.Invoke();
+        playerControls.Game.Shot.performed -= _ => PlayerShot.Invoke();
         playerControls.Disable();
     }
 

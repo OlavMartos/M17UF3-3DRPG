@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -42,6 +43,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _sensitive;
     [SerializeField] private float gravityValue;
 
+    [Header("Gun")]
+    public GameObject bullet;
+    private List<Transform> pool;
+
     [Header("a")] [SerializeField] private bool PlayerControlsStatus;
     public Transform _transform { get; set; }
 
@@ -54,8 +59,20 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _playerCamera = Camera.main.transform.forward;
 
-
         StartValues();
+        InstantiatePoolItem();
+    }
+
+    private void InstantiatePoolItem()
+    {
+        pool = new List<Transform>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject shot = Instantiate(bullet, transform.position, Quaternion.identity, transform);
+            shot.SetActive(false);
+            pool.Add(shot.transform);
+        }
     }
 
     /// <summary>
@@ -80,6 +97,7 @@ public class PlayerController : MonoBehaviour
         InputManager.PlayerJump += Jump;
         InputManager.PlayerAim += Aiming;
         InputManager.PlayerCrouch += Crouch;
+        InputManager.PlayerShot += Shot;
     }
 
     private void OnDisable()
@@ -87,6 +105,7 @@ public class PlayerController : MonoBehaviour
         InputManager.PlayerJump -= Jump;
         InputManager.PlayerAim -= Aiming;
         InputManager.PlayerCrouch -= Crouch;
+        InputManager.PlayerShot -= Shot;
     }
 
     void Update()
@@ -242,9 +261,42 @@ public class PlayerController : MonoBehaviour
     {
         isAiming = !isAiming;
         if (isAiming) SwapCamera.Instance.AimCamera();
-        else SwapCamera.Instance.NormalCamera();
+        else  SwapCamera.Instance.NormalCamera();
         _animator.SetBool("isAiming", isAiming);
+
+
         // https://www.youtube.com/watch?v=Ri8PEbD4w8A&ab_channel=samyam
+    }
+
+    public void Shot()
+    {
+        if (isAiming)
+        {
+            foreach (Transform shotTransform in pool)
+            {
+                if (!shotTransform.gameObject.activeSelf)
+                {
+                    shotTransform.position = transform.position;
+                    shotTransform.rotation = transform.rotation;
+                    shotTransform.gameObject.SetActive(true);
+
+                    Rigidbody rbShot = shotTransform.GetComponent<Rigidbody>();
+                    if (rbShot != null)
+                    {
+                        rbShot.AddForce(transform.forward * 50f, ForceMode.Impulse);
+                    }
+
+                    StartCoroutine(DesactivarBala(shotTransform.gameObject, 1.0f));
+                    return;
+                }
+            }
+        }
+    }
+
+    IEnumerator DesactivarBala(GameObject shot, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        shot.SetActive(false);
     }
 
     /// <summary>
