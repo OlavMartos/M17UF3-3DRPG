@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private InputManager inputManager;
     private Vector2 movementInput;
     private Vector2 mouseInput;
-    public Transform _playerCamera;
+    public Vector3 _playerCamera;
 
     [Header("Test Bools")]
     public bool isDead;
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody>();
-        _playerCamera = Camera.main.transform;
+        _playerCamera = Camera.main.transform.forward;
 
 
         StartValues();
@@ -243,6 +243,7 @@ public class PlayerController : MonoBehaviour
         isAiming = !isAiming;
         if (isAiming) SwapCamera.Instance.AimCamera();
         else SwapCamera.Instance.NormalCamera();
+        _animator.SetBool("isAiming", isAiming);
         // https://www.youtube.com/watch?v=Ri8PEbD4w8A&ab_channel=samyam
     }
 
