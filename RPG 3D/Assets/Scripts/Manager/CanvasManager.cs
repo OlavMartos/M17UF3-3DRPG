@@ -12,12 +12,19 @@ public class CanvasManager : MonoBehaviour
     public GameObject savingGame;
     public GameObject persistentCanvas;
 
+    [Header("Minimap")]
+    public GameObject minimap;
+
+    [Header("Interact")]
+    public GameObject interact;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        interact.SetActive(false);
         EnableHUD();
     }
 

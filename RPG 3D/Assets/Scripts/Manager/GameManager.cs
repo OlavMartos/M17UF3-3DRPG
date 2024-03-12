@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public int BrainCount;
     public int loadedBrainCount;
-    [SerializeField] private List<GameObject> playerHUD = new List<GameObject>();
+    private List<GameObject> playerHUD = new List<GameObject>();
 
 
     private void Awake()
