@@ -25,6 +25,7 @@ public class CanvasManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         interact.SetActive(false);
+        minimap.SetActive(true);
         EnableHUD();
     }
 

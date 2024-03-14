@@ -18,10 +18,7 @@ public class Fireplace : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            CanvasManager.Instance.interact.SetActive(false);
-        }
+        CanvasManager.Instance.interact.SetActive(false);
     }
 
 }

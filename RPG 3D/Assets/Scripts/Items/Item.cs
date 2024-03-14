@@ -5,13 +5,15 @@ public class Item : ScriptableObject
 {
     public int id;
     public string itemName;
-    public Sprite icon;
+    public Vector3 position;
+    public Vector3 rotation;
+    public Vector3 scale;
     public ItemType itemType;
 
     public enum ItemType
     {
-        SmallPotion,
-        GroupOfPotions,
-        Key
+        AncientKey,
+        MagicKey,
+        NormalKey
     }
 }
