@@ -10,8 +10,7 @@ public class PlayerData
     public float speed;
     public bool isCrouching;
     public int brainCount;
-
-    public Stack<Item> items;
+    public List<ItemController> collectibles;
 
     public PlayerData(PlayerController controller)
     {
@@ -25,15 +24,8 @@ public class PlayerData
         speed = controller.playerSpeed;
         isCrouching = controller.isCrouching;
         brainCount = GameManager.Instance.BrainCount;
-
-        for (int i = 0; i < controller.transform.childCount; i++)
-        {
-            GameObject go = controller.transform.GetChild(i).gameObject;
-            if (go.TryGetComponent<ItemController>(out ItemController itemContrl))
-            {
-                items.Push(itemContrl.item);
-            }
-        }
+        collectibles = DataManager.instance.collectibles;
+        
     }
 
     ///

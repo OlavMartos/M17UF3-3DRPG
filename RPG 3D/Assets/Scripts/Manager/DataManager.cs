@@ -7,6 +7,7 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
     public GameObject player;
+    public List<ItemController> collectibles;
 
     private void Awake()
     {
@@ -46,6 +47,12 @@ public class DataManager : MonoBehaviour
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.isCrouching = data.isCrouching;
         GameManager.Instance.loadedBrainCount = data.brainCount;
+        //collectibles = data.collectibles;
+        foreach (var collectible in data.collectibles)
+        {
+            collectible.transform.localPosition = data.position;
+            collectible.gameObject.GetComponent<ItemPickup>().Pickup(player.transform);
+        }
 
     }
 

@@ -17,6 +17,8 @@ public class ItemPickup : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
+
+        DataManager.instance.collectibles.Add(gameObject.GetComponent<ItemController>());
     }
 
     private void OnTriggerEnter(Collider collision)
