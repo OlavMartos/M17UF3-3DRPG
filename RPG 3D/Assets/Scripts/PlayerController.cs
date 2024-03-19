@@ -335,4 +335,12 @@ public class PlayerController : MonoBehaviour
         inputManager.DisableControls();
         yield return new WaitForSeconds(2.5f);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<ICollectable>(out ICollectable iColl))
+        {
+            iColl.Collected();
+        }
+    }
 }

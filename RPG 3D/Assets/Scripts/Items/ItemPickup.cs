@@ -1,9 +1,10 @@
-using System.Drawing;
+using System;
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+public class ItemPickup : MonoBehaviour, ICollectable
 {
     public Item item;
+    public static event Action<bool> OnGetKey = delegate { }; //STATIC
 
     public void Pickup(Transform parent)
     {
@@ -24,5 +25,14 @@ public class ItemPickup : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.tag == "Player") Pickup(collision.transform);
+    }
+
+    public void Collected()
+    {
+        Collected(true);
+    }
+    public void Collected(bool f)
+    {
+        OnGetKey.Invoke(f);
     }
 }
