@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
@@ -67,5 +68,14 @@ public class CanvasManager : MonoBehaviour
         savingGame.SetActive(true);
         yield return new WaitForSeconds(2.0f);
         EnableHUD();
+    }
+
+    public void VictoryStatus(int count)
+    {
+        keysCount.SetActive(true);
+        if (keysCount.GetComponentInChildren<TextMeshProUGUI>() != null)
+        {
+            keysCount.GetComponentInChildren<TextMeshProUGUI>().text = $"Keys: {count}/3";
+        }
     }
 }
