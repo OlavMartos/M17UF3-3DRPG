@@ -51,8 +51,8 @@ public class DataManager : MonoBehaviour
         foreach (var collectible in data.collectibles)
         {
             collectible.transform.localPosition = data.position;
-            collectible.GetComponent<ItemPickup>().Pickup(player.transform);
             collectible.GetComponent<ICollectable>().Collected();
+            collectible.GetComponent<ItemPickup>().Pickup(player.transform);
         }
 
     }

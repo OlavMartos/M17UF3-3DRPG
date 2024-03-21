@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
@@ -18,6 +17,9 @@ public class CanvasManager : MonoBehaviour
     [Header("Interact")]
     public GameObject interact;
 
+    [Header("Victory")]
+    public GameObject keysCount;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
@@ -25,6 +27,7 @@ public class CanvasManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         interact.SetActive(false);
+        keysCount.SetActive(false);
         minimap.SetActive(true);
         EnableHUD();
     }
