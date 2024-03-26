@@ -1,20 +1,23 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class Gate : MonoBehaviour
 {
     public int KeysCollected;
+    public static Gate Instance;
     private Animator _animator;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-    }
+        if (Instance != null && Instance != this) Destroy(gameObject);
+        else Instance = this;
 
-    private void OnEnable()
-    {
         ItemPickup.OnGetKey += AddKey;
     }
+
+    //private void OnEnable()
+    //{
+    //}
 
     private void OnDisable()
     {
@@ -26,7 +29,6 @@ public class Gate : MonoBehaviour
         KeysCollected++;
         if(KeysCollected == 3)
         {
-            //DataManager.instance.player.GetComponent<PlayerController>().isVictory = true;
             _animator.Play("OpenAnim");
             DisableFirstCollider();
         }

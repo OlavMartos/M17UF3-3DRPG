@@ -47,12 +47,10 @@ public class DataManager : MonoBehaviour
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.isCrouching = data.isCrouching;
         GameManager.Instance.loadedBrainCount = data.brainCount;
-        
+
         foreach (var collectible in data.collectibles)
         {
-            collectible.transform.localPosition = data.position;
             collectible.GetComponent<ICollectable>().Collected();
-            collectible.GetComponent<ItemPickup>().Pickup(player.transform);
         }
 
     }

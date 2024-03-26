@@ -19,17 +19,18 @@ public class ItemPickup : MonoBehaviour, ICollectable
             transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        DataManager.instance.collectibles.Add(gameObject.GetComponent<ItemController>());
     }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.tag == "Player") Pickup(collision.transform);
-    }
+    //private void OnTriggerEnter(Collider collision)
+    //{
+    //    if (collision.tag == "Player") Pickup(collision.transform);
+    //}
 
     public void Collected()
     {
         Collected(true);
+        Pickup(GameManager.Instance.GetPlayer().transform);
+        DataManager.instance.collectibles.Add(gameObject.GetComponent<ItemController>());
     }
     public void Collected(bool f)
     {
