@@ -15,10 +15,6 @@ public class Gate : MonoBehaviour
         ItemPickup.OnGetKey += AddKey;
     }
 
-    //private void OnEnable()
-    //{
-    //}
-
     private void OnDisable()
     {
         ItemPickup.OnGetKey -= AddKey;
