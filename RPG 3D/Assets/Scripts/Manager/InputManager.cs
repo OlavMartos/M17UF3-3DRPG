@@ -70,6 +70,11 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Disable();
     }
 
+    public void EnableControls()
+    {
+        playerControls.Game.Enable();
+    }
+
     public bool GetCurrentControlsStatus()
     {
         return playerControls.Game.enabled;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class PlayerController : MonoBehaviour
@@ -322,7 +323,12 @@ public class PlayerController : MonoBehaviour
     {
         _animator.Play("Die");
         inputManager.DisableControls();
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(4f);
+        // Se ha probado al recargar la escena, enviarlo a otra..., pero petaba por lo que así se queda
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
     }
 
     /// <summary>
@@ -341,6 +347,14 @@ public class PlayerController : MonoBehaviour
         if (other.TryGetComponent<ICollectable>(out ICollectable iColl))
         {
             iColl.Collected();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.TryGetComponent<IDamagable>(out IDamagable iDam))
+        {
+            isDead = true;
         }
     }
 }
