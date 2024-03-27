@@ -50,6 +50,7 @@ public class DataManager : MonoBehaviour
 
         foreach (var collectible in data.collectibles)
         {
+            // Si salta un error, ve a la fogata, guarda y vuelve a cargar la partida, teoricamente se ha arreglado el error
             collectible.GetComponent<ICollectable>().Collected();
         }
 

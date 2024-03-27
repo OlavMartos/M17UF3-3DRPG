@@ -21,6 +21,9 @@ public class CanvasManager : MonoBehaviour
     [Header("Victory")]
     public GameObject keysCount;
 
+    [Header("HUD")]
+    public GameObject hud;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
@@ -39,6 +42,16 @@ public class CanvasManager : MonoBehaviour
         newGame.SetActive(false);
         saveLoaded.SetActive(false);
         savingGame.SetActive(false);
+        hud.SetActive(true);
+    }
+
+    public void DisablesAll()
+    {
+        persistentCanvas.SetActive(false);
+        interact.SetActive(false);
+        keysCount.SetActive(false);
+        minimap.SetActive(false);
+        hud.SetActive(false);
     }
 
     public void EnablePersistent()
