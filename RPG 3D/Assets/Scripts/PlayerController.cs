@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class PlayerController : MonoBehaviour
@@ -321,6 +320,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator BadEnd()
     {
+        AudioManager.instance.Death();
         _animator.Play("Die");
         inputManager.DisableControls();
         yield return new WaitForSeconds(4f);

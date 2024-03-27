@@ -17,6 +17,7 @@ public class CanvasManager : MonoBehaviour
 
     [Header("Interact")]
     public GameObject interact;
+    public GameObject noInteract;
 
     [Header("Victory")]
     public GameObject keysCount;
@@ -31,6 +32,7 @@ public class CanvasManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         interact.SetActive(false);
+        noInteract.SetActive(false);
         keysCount.SetActive(false);
         minimap.SetActive(true);
         EnableHUD();
@@ -49,6 +51,7 @@ public class CanvasManager : MonoBehaviour
     {
         persistentCanvas.SetActive(false);
         interact.SetActive(false);
+        noInteract.SetActive(false);
         keysCount.SetActive(false);
         minimap.SetActive(false);
         hud.SetActive(false);

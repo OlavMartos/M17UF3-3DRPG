@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Fireplace : MonoBehaviour
@@ -9,6 +7,11 @@ public class Fireplace : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CanvasManager.Instance.interact.SetActive(true);
+            if(Gate.Instance.KeysCollected == 3)
+            {
+                CanvasManager.Instance.noInteract.SetActive(true);
+                return;
+            }
             if (InputManager.Instance.IsInteracting() > 0)
             {
                 DataManager.instance.SaveGame();
@@ -19,6 +22,7 @@ public class Fireplace : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         CanvasManager.Instance.interact.SetActive(false);
+        CanvasManager.Instance.noInteract.SetActive(false);
     }
 
 }

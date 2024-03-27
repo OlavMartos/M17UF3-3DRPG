@@ -25,6 +25,7 @@ public class Gate : MonoBehaviour
         KeysCollected++;
         if(KeysCollected == 3)
         {
+            AudioManager.instance.OpenDoor();
             _animator.Play("OpenAnim");
             DisableFirstCollider();
         }
