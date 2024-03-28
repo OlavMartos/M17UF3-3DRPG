@@ -73,6 +73,7 @@ MonoBehaviour:
   welcome: {fileID: 0}
   shopCorrect: {fileID: 0}
   shopIncorrect: {fileID: 0}
+  pointer: {fileID: 0}
 --- !u!114 &1210713650502615214
 MonoBehaviour:
   m_ObjectHideFlags: 0
