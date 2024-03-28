@@ -43,9 +43,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityValue;
     [SerializeField] private float speedRotation;
 
-    [Header("Gun")]
+    [Header("Shotting")]
     public GameObject bullet;
     private List<Transform> pool;
+    public GameObject cannon;
 
     [Header("a")] [SerializeField] private bool PlayerControlsStatus;
     public Transform _transform { get; set; }
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            GameObject shot = Instantiate(bullet, transform.position, Quaternion.identity, transform);
+            GameObject shot = Instantiate(bullet, cannon.transform.position, Quaternion.identity, cannon.transform);
             shot.SetActive(false);
             pool.Add(shot.transform);
         }
@@ -253,7 +254,7 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetBool("isRunning", true);
             _animator.SetBool("isWalking", false);
-            playerSpeed = 200f;
+            playerSpeed = 45f;
             _jumpForce = 3f;
         }
         else
@@ -273,9 +274,6 @@ public class PlayerController : MonoBehaviour
         if (isAiming) SwapCamera.Instance.AimCamera();
         else  SwapCamera.Instance.NormalCamera();
         _animator.SetBool("isAiming", isAiming);
-
-
-        // https://www.youtube.com/watch?v=Ri8PEbD4w8A&ab_channel=samyam
     }
 
     public void Shot()
@@ -286,8 +284,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (!shotTransform.gameObject.activeSelf)
                 {
-                    shotTransform.position = transform.position;
-                    shotTransform.rotation = transform.rotation;
+                    shotTransform.position = cannon.transform.position;
+                    shotTransform.rotation = cannon.transform.rotation;
                     shotTransform.gameObject.SetActive(true);
 
                     Rigidbody rbShot = shotTransform.GetComponent<Rigidbody>();
@@ -296,7 +294,7 @@ public class PlayerController : MonoBehaviour
                         rbShot.AddForce(transform.forward * 50f, ForceMode.Impulse);
                     }
 
-                    StartCoroutine(DesactivarBala(shotTransform.gameObject, 1.0f));
+                    StartCoroutine(DesactivarBala(shotTransform.gameObject, 2.0f));
                     return;
                 }
             }
