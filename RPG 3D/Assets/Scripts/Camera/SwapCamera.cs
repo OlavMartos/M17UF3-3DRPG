@@ -6,7 +6,6 @@ public class SwapCamera : MonoBehaviour
     public static SwapCamera Instance;
     public CinemachineVirtualCamera normalCamera;
     public CinemachineVirtualCamera aimCamera;
-    public CinemachineVirtualCamera finalCamera;
 
     private void Awake()
     {
@@ -23,10 +22,5 @@ public class SwapCamera : MonoBehaviour
     public void NormalCamera()
     {
         aimCamera.Priority -= 10;
-    }
-
-    public void Finale()
-    {
-        finalCamera.Priority += 30;
     }
 }

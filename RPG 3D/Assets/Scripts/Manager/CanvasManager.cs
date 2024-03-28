@@ -25,6 +25,11 @@ public class CanvasManager : MonoBehaviour
     [Header("HUD")]
     public GameObject hud;
 
+    [Header("Shop")]
+    public GameObject welcome;
+    public GameObject shopCorrect;
+    public GameObject shopIncorrect;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
@@ -34,6 +39,11 @@ public class CanvasManager : MonoBehaviour
         interact.SetActive(false);
         noInteract.SetActive(false);
         keysCount.SetActive(false);
+
+        welcome.SetActive(false); 
+        shopCorrect.SetActive(false); 
+        shopIncorrect.SetActive(false);
+
         minimap.SetActive(true);
         EnableHUD();
     }
@@ -93,5 +103,10 @@ public class CanvasManager : MonoBehaviour
         {
             keysCount.GetComponentInChildren<TextMeshProUGUI>().text = $"Keys: {count}/3";
         }
+    }
+
+    public void Shop()
+    {
+        welcome.SetActive(true);
     }
 }
