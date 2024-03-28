@@ -30,6 +30,8 @@ public class CanvasManager : MonoBehaviour
     public GameObject shopCorrect;
     public GameObject shopIncorrect;
 
+    [Header("Aim")] public GameObject pointer;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
@@ -43,6 +45,8 @@ public class CanvasManager : MonoBehaviour
         welcome.SetActive(false); 
         shopCorrect.SetActive(false); 
         shopIncorrect.SetActive(false);
+
+        pointer.SetActive(false);
 
         minimap.SetActive(true);
         EnableHUD();
@@ -108,5 +112,10 @@ public class CanvasManager : MonoBehaviour
     public void Shop()
     {
         welcome.SetActive(true);
+    }
+
+    public void AimPointer()
+    {
+        pointer.SetActive(!pointer.activeSelf);
     }
 }

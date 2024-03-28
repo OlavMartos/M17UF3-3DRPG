@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     // Input variables
     private InputManager inputManager;
     private Vector2 movementInput;
-    private Vector2 mouseInput;
     public Vector3 _playerCamera;
 
     [Header("Test Bools")]
@@ -42,10 +41,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _sensitive;
     [SerializeField] private float gravityValue;
+    [SerializeField] private float speedRotation;
 
-    [Header("Gun")]
+    [Header("Shotting")]
     public GameObject bullet;
     private List<Transform> pool;
+    public GameObject cannon;
+    public int cloneMax;
 
     [Header("a")] [SerializeField] private bool PlayerControlsStatus;
     public Transform _transform { get; set; }
@@ -67,9 +69,9 @@ public class PlayerController : MonoBehaviour
     {
         pool = new List<Transform>();
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i <= cloneMax; i++)
         {
-            GameObject shot = Instantiate(bullet, transform.position, Quaternion.identity, transform);
+            GameObject shot = Instantiate(bullet, cannon.transform.position, Quaternion.identity, cannon.transform);
             shot.SetActive(false);
             pool.Add(shot.transform);
         }
@@ -122,8 +124,11 @@ public class PlayerController : MonoBehaviour
         if (isGrounded) _animator.SetBool("isFalling", false);
         if (isFalling) _animator.SetBool("isFalling", true); _animator.SetBool("startJump", false);
         if (isJumping) _animator.SetBool("startJump", true);
-        ChangeAnimatorLayer();
-        
+
+        // Mouse X
+        float mouseXMove = Input.GetAxis("Mouse X");
+        RotateCharacter(mouseXMove);
+
         // Call to functions
         Move();
         Run();
@@ -222,6 +227,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void RotateCharacter(float mouseXMove)
+    {
+        Vector3 rotation = new Vector3(0, mouseXMove * speedRotation, 0);
+        transform.Rotate(rotation);
+    }
+
     /// <summary>
     /// Function to jump using a gravityValue
     /// </summary>
@@ -243,7 +254,7 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetBool("isRunning", true);
             _animator.SetBool("isWalking", false);
-            playerSpeed = 200f;
+            playerSpeed = 45f;
             _jumpForce = 3f;
         }
         else
@@ -262,10 +273,8 @@ public class PlayerController : MonoBehaviour
         isAiming = !isAiming;
         if (isAiming) SwapCamera.Instance.AimCamera();
         else  SwapCamera.Instance.NormalCamera();
+        CanvasManager.Instance.AimPointer();
         _animator.SetBool("isAiming", isAiming);
-
-
-        // https://www.youtube.com/watch?v=Ri8PEbD4w8A&ab_channel=samyam
     }
 
     public void Shot()
@@ -276,8 +285,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (!shotTransform.gameObject.activeSelf)
                 {
-                    shotTransform.position = transform.position;
-                    shotTransform.rotation = transform.rotation;
+                    shotTransform.position = cannon.transform.position;
+                    shotTransform.rotation = cannon.transform.rotation;
                     shotTransform.gameObject.SetActive(true);
 
                     Rigidbody rbShot = shotTransform.GetComponent<Rigidbody>();
@@ -286,14 +295,14 @@ public class PlayerController : MonoBehaviour
                         rbShot.AddForce(transform.forward * 50f, ForceMode.Impulse);
                     }
 
-                    StartCoroutine(DesactivarBala(shotTransform.gameObject, 1.0f));
+                    StartCoroutine(DisableBullet(shotTransform.gameObject, 2.0f));
                     return;
                 }
             }
         }
     }
 
-    IEnumerator DesactivarBala(GameObject shot, float waitTime)
+    IEnumerator DisableBullet(GameObject shot, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         shot.SetActive(false);
@@ -305,12 +314,22 @@ public class PlayerController : MonoBehaviour
     void Crouch()
     {
         isCrouching = !isCrouching;
+        ChangeAnimatorLayer();
     }
 
     public void ChangeAnimatorLayer()
     {
-        if (isCrouching) _animator.SetLayerWeight(1, 1);
-        else _animator.SetLayerWeight(1, 0);
+        if (isCrouching)
+        {
+            Debug.Log("<b><i>No entiendo porque no se reproducen las anims de crouch</i></b>");
+            _animator.SetBool("IsCrouching", true);
+            _animator.SetLayerWeight(1, 1);
+        }
+        else
+        {
+            _animator.SetBool("IsCrouching", false);
+            _animator.SetLayerWeight(1, 0);
+        }
     }
 
 
@@ -324,7 +343,7 @@ public class PlayerController : MonoBehaviour
         _animator.Play("Die");
         inputManager.DisableControls();
         yield return new WaitForSeconds(4f);
-        // Se ha probado al recargar la escena, enviarlo a otra..., pero petaba por lo que así se queda
+        // Se ha probado al recargar la escena, enviarlo a otra..., pero petaba por lo que asï¿½ se queda
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
