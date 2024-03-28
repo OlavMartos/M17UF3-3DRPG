@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     // Input variables
     private InputManager inputManager;
     private Vector2 movementInput;
-    private Vector2 mouseInput;
     public Vector3 _playerCamera;
 
     [Header("Test Bools")]
@@ -42,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _sensitive;
     [SerializeField] private float gravityValue;
+    [SerializeField] private float speedRotation;
 
     [Header("Gun")]
     public GameObject bullet;
@@ -123,7 +123,11 @@ public class PlayerController : MonoBehaviour
         if (isFalling) _animator.SetBool("isFalling", true); _animator.SetBool("startJump", false);
         if (isJumping) _animator.SetBool("startJump", true);
         ChangeAnimatorLayer();
-        
+
+        // Mouse X
+        float mouseXMove = Input.GetAxis("Mouse X");
+        RotateCharacter(mouseXMove);
+
         // Call to functions
         Move();
         Run();
@@ -220,6 +224,12 @@ public class PlayerController : MonoBehaviour
             Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
             _rb.MovePosition(transform.position + direction * playerSpeed * Time.deltaTime);
         }
+    }
+
+    private void RotateCharacter(float mouseXMove)
+    {
+        Vector3 rotation = new Vector3(0, mouseXMove * speedRotation, 0);
+        transform.Rotate(rotation);
     }
 
     /// <summary>
@@ -324,7 +334,7 @@ public class PlayerController : MonoBehaviour
         _animator.Play("Die");
         inputManager.DisableControls();
         yield return new WaitForSeconds(4f);
-        // Se ha probado al recargar la escena, enviarlo a otra..., pero petaba por lo que así se queda
+        // Se ha probado al recargar la escena, enviarlo a otra..., pero petaba por lo que asï¿½ se queda
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
