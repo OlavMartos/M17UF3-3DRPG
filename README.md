@@ -28,4 +28,4 @@ El objectiu del joc es aconseguir les tres claus disperses per el mapa i poder c
 - Animations: Tal i com s'ha mencionat en la descripció del joc les animacions tarden en executar-se i per el terreny, el personatge de cop i volta pot dir que es troba caient. També les animacions de quan el persontage es troba ajupit no s'ha executen per qualssevol motiu que no s'ha trobat.
 
 ## Conclusions
-Aquest projecte podria ser molt millor i més polit, però vam tenir que finalitzar un projecte de M13 que va consumir una gran quantitat de temps de M17 i això sumat a excursions que també treien temps.
+Aquest projecte podria ser molt millor i més polit, però vam tenir que finalitzar un projecte de M13 que va consumir una gran quantitat de temps de M17 i això sumat a certes excursions que també treien temps d'aquest modul.
