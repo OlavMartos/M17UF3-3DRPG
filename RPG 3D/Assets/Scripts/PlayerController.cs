@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     private List<Transform> pool;
     public GameObject cannon;
-    public int cloneMax;
+    public int bulletCount;
 
     [Header("a")] [SerializeField] private bool PlayerControlsStatus;
     public Transform _transform { get; set; }
@@ -62,14 +62,13 @@ public class PlayerController : MonoBehaviour
         _playerCamera = Camera.main.transform.forward;
 
         StartValues();
-        InstantiatePoolItem();
     }
 
     private void InstantiatePoolItem()
     {
         pool = new List<Transform>();
 
-        for (int i = 0; i <= cloneMax; i++)
+        for (int i = 1; i <= bulletCount; i++)
         {
             GameObject shot = Instantiate(bullet, cannon.transform.position, Quaternion.identity, cannon.transform);
             shot.SetActive(false);
@@ -92,6 +91,10 @@ public class PlayerController : MonoBehaviour
     {
         inputManager = InputManager.Instance;
         initialSpeed = playerSpeed;
+
+        if (bulletCount <= 0) bulletCount = 3;
+
+        InstantiatePoolItem();
     }
 
     private void OnEnable()
