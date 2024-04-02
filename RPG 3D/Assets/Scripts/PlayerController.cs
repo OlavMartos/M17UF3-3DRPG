@@ -324,7 +324,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isCrouching)
         {
-            Debug.Log("<b><i>No entiendo porque no se reproducen las anims de crouch</i></b>");
             _animator.SetBool("IsCrouching", true);
             _animator.SetLayerWeight(1, 1);
         }
